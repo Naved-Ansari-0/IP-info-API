@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
                 progressBar.setVisibility(View.VISIBLE);
 
-                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+//                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
 
                 JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, getIpApiLink, null,
                         new Response.Listener<JSONObject>() {
@@ -71,7 +71,10 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                 );
-                queue.add(request);
+
+//                queue.add(request);
+                MySingleton.getInstance(MainActivity.this).addToRequestQueue(request);
+
             }
         });
 
@@ -104,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                                             "Region : " + region + "\n" +
                                             "Country : " + country + "\n" +
                                             "Location : " + loc + "\n" +
-                                            "Organizatin : " + org + "\n" +
+                                            "Organization : " + org + "\n" +
                                             "Postal : " + postal + "\n" +
                                             "Timezone : " + timezone + "\n"
                                             );
