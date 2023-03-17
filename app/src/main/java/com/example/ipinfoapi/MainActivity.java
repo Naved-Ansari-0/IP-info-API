@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                /*
                 progressBar.setVisibility(View.VISIBLE);
 
 //                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
@@ -74,7 +75,20 @@ public class MainActivity extends AppCompatActivity {
 
 //                queue.add(request);
                 MySingleton.getInstance(MainActivity.this).addToRequestQueue(request);
+                */
 
+            IpService ipService = new IpService(MainActivity.this);
+            ipService.getIp(getIpApiLink, new IpService.VolleyResponseListener() {
+                @Override
+                public void OnError(String message) {
+                    Toast.makeText(MainActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void OnResponse(String ip) {
+                    showIp.setText(ip);
+                }
+                });
             }
         });
 
@@ -82,13 +96,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String ip = showIp.getText().toString();
+                String ip;
+                ip = showIp.getText().toString();
                 if(ip.equals(""))
                     return;
 
                 progressBar.setVisibility(View.VISIBLE);
 
-                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+//                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
                 JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, getIpInfoApiLink + ip + "/geo", null,
                         new Response.Listener<JSONObject>() {
                             @Override
@@ -125,7 +140,8 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                 );
-                queue.add(request);
+//                queue.add(request);
+                MySingleton.getInstance(MainActivity.this).addToRequestQueue(request);
             }
         });
     }
